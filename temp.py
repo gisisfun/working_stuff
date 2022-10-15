@@ -911,9 +911,6 @@ project_reports = project_reports[
     (project_reports['invoiced'] != 0) &
     (project_reports['report_status']=='Approved')]
 
-
-    
-
 # Primary and Secondary Outcomes
 primary_secondary_outcomes = RLP_Outcomes.copy(deep=True)
 
@@ -982,38 +979,34 @@ meri_outcomes = read_sheet('MERI_Outcomes','M01 '+extract_date+'.xlsx',
                                              tail(1)
 
 # Meri Outcomes Priorities
-# meri_priorities = read_sheet('MERI_Priorities','M01 '+extract_date+'.xlsx',
-#                             start_row=0)[['merit_project_id',
-#                                           'document_name',
-#                                           'relevant_section',
-#                                           'explanation_of_strategic_alignment']]
-# meri_priorities.drop_duplicates(inplace=True)
-# meri_priorities = meri_priorities[~meri_priorities['document_name'].isnull()]
-# meri_priorities['documents_priority'] = "name: " + \
-#                 meri_priorities['document_name'] + ' section: ' + \
-#                 meri_priorities['relevant_section'] +' alignment: '+ \
-#                 meri_priorities['explanation_of_strategic_alignment']
+meri_priorities = read_sheet('MERI_Priorities','M01 '+extract_date+'.xlsx',
+                            start_row=0)[['merit_project_id',
+                                          'document_name',
+                                          'relevant_section',
+                                          'explanation_of_strategic_alignment']]
+meri_priorities.drop_duplicates(inplace=True)
+meri_priorities = meri_priorities[~meri_priorities['document_name'].isnull()]
+meri_priorities['documents_priority'] = "name: " + \
+                meri_priorities['document_name'] + ' section: ' + \
+                meri_priorities['relevant_section'] +' alignment: '+ \
+                meri_priorities['explanation_of_strategic_alignment']
                 
-# meri_priorities = meri_priorities[['merit_project_id','documents_priority']]
-# meri_priorities = conc_col(meri_priorities,
-#                            'merit_project_id',
-#                            'documents_priority')
+meri_priorities = meri_priorities[['merit_project_id','documents_priority']]
+meri_priorities = conc_col(meri_priorities,
+                           'merit_project_id',
+                           'documents_priority')
 
 report_species = report_raw.copy(deep = True)                                   
 report_species = report_species[~report_species['species'].isnull()]
 report_species = report_species[['merit_project_id','species']]
 report_species = conc_col(report_species,'merit_project_id','species')
 
-# report_project_services <- Report_Raw %>%
-#   select(merit_project_id,service,target_measure) %>%
-#   distinct() %>%
-#   mutate(report_project_services = str_c(service,target_measure,sep=' - ')) %>%
-#   select(-service,-target_measure) %>%
-#   #filter(!is.na(report_project_services)) %>%
-#   group_by(merit_project_id) %>%
-#   summarize(report_project_services=str_c(str_trim(report_project_services),
-#                                           collapse="|")) %>%
-#   ungroup() 
+report_project_services = report_raw.copy(deep=True)
+report_project_services = report_project_services[['merit_project_id','service','target_measure']]
+report_project_services['report_project_services'] = report_project_services['service'] + \
+    ' - ' + report_project_services['target_measure']
+report_project_services = report_project_services[['merit_project_id','report_project_services']]
+report_project_services = conc_col(report_project_services,'merit_project_id','report_project_services')
 
 # # load("sprat_lookup.Rdata")
 # # col_by_merit_project_id <- function(Data,col) {
