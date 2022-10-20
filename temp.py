@@ -1,8 +1,6 @@
 
-
 """
 Spyder Editor
-
 This is a temporary script file.
 """
 
@@ -14,7 +12,6 @@ import numpy as np
 def read_sheet(sheet_name:str,fname:str,start_row:int = 2) -> pd.DataFrame:
     """
     Reads a workbook and cleans headings
-
     Parameters
     ----------
     sheet_name : str
@@ -23,12 +20,10 @@ def read_sheet(sheet_name:str,fname:str,start_row:int = 2) -> pd.DataFrame:
         filename of workbook.
     start_row : int, optional
         rows to to skip before data. The default is 2.
-
     Returns
     -------
     df_out : pd.DataFrame
         The contents of the worksheet in a dataframe.
-
     """
     df_out = pd.read_excel(fname,sheet_name=sheet_name,
                          header=start_row).\
@@ -39,19 +34,16 @@ def read_sheet(sheet_name:str,fname:str,start_row:int = 2) -> pd.DataFrame:
 def load_mult_wbooks(files_list:list,sheet_name:str) -> pd.DataFrame:
     """
     Loads and appends multiple worksheets to a dataframe.
-
     Parameters
     ----------
     files_list : list
         The list of M file references.
     sheet_name : str
         The target sheet name
-
     Returns
     -------
     df_out : DataFrame
         The appended worksheets in a dataframe.
-
     """
     files_list_out = [file_spec + ' ' + extract_date+".xlsx" 
                       for file_spec in files_list]
@@ -67,7 +59,6 @@ def get_indicator(df_in:pd.DataFrame,
                   value:str) -> pd.DataFrame:
     """
     Extract indicator column data
-
     Parameters
     ----------
     df_in : pd.DataFrame
@@ -76,12 +67,10 @@ def get_indicator(df_in:pd.DataFrame,
         New indicator column name.
     value : str
         Test value found source dataframe.
-
     Returns
     -------
    df_out : pd.DataFrame
         A 2 column list to be joined to the output list.
-
     """
     df_out = df_in.copy(deep=True)    
     df_out[indicator]='Y'
@@ -92,7 +81,6 @@ def get_indicator(df_in:pd.DataFrame,
 def ids_by_df(ids_in:pd.DataFrame, df_in:pd.DataFrame, fy:str) -> pd.DataFrame:
     """
     Create bulk project services
-
     Parameters
     ----------
     ids_in : pd.DataFrame
@@ -101,12 +89,10 @@ def ids_by_df(ids_in:pd.DataFrame, df_in:pd.DataFrame, fy:str) -> pd.DataFrame:
         project Service descriptions.
     fy : str
         financial year text.
-
     Returns
     -------
     df_out : DataFrame
         A dataframe with an project id for each project service.
-
     """
     df_temp = pd.concat(list(itertools.repeat(df_in,ids_in.shape[0])))
     ids_out = pd.concat(list(itertools.repeat(ids_in,df_in.shape[0]))).sort_values()
@@ -126,7 +112,6 @@ def conc_col(df_in:pd.DataFrame,
     conc_col
     
     copies dataframe, drops duplicate rows, drops null values, sorts values.
-
     Parameters
     ----------
     df_in : pd.DataFrame
@@ -135,12 +120,10 @@ def conc_col(df_in:pd.DataFrame,
         DESCRIPTION.
     agg_col : str
         DESCRIPTION.
-
     Returns
     -------
     df_out : TYPE
         DESCRIPTION.
-
     """
     df_out = df_in.copy(deep=True)
     df_out.drop_duplicates(inplace=True) 
@@ -155,7 +138,6 @@ def join_by_service_target_measure(df_in:pd.DataFrame,service:str,
                                     ) -> pd.DataFrame:
     """
     Join by service and target measure
-
     Parameters
     ----------
     df_in : pd.DataFrame
@@ -166,7 +148,6 @@ def join_by_service_target_measure(df_in:pd.DataFrame,service:str,
         target measure name.
     grant_or_procurement : str, optional
         either grant or procurement. The default is 'procurement'.
-
     Returns
     -------
     df_out : pd.DataFrame
@@ -184,19 +165,16 @@ def make_ref_df(df_in:pd.DataFrame,id_col:str,lookup_col:str,
                 lookup_vals:list) -> pd.DataFrame:
     """
     Does not work
-
     Parameters
     ----------
     df_in : pd.DataFrame
         DESCRIPTION.
     *args : list
         DESCRIPTION.
-
     Returns
     -------
     df_out : TYPE
         DESCRIPTION.
-
     """
     df_out = df_in.copy(deep=True)
     filtered = df_out.lookup_col.isin(lookup_vals)
@@ -214,7 +192,6 @@ def no_category_extract_no_context_no_species(
         sub_category:str=None) -> pd.DataFrame:
     """
     transformation - no_category_extract_no_context_no_species
-
 ''' """
     
     df_out = df_in.copy(deep=True)
@@ -254,7 +231,6 @@ def sub_category_extract_context_no_species(
         species:str=None) -> pd.DataFrame:
     """
     transformation - sub_category_extract_no_context_no_species
-
     Parameters
     ----------
     df_in : pd.DataFrame
@@ -283,12 +259,10 @@ def sub_category_extract_context_no_species(
         DESCRIPTION. The default is None.
     sub_category : str, optional
         DESCRIPTION. The default is None.
-
     Returns
     -------
     df_out : pd.DataFrame
         DESCRIPTION.
-
     """
     
     df_out = df_in.copy(deep=True)
@@ -331,7 +305,6 @@ def sub_category_extract_no_context_no_species(
         property:str=None, species:str=None, value:str=None) -> pd.DataFrame:
     """
     transformation - sub_category_extract_no_context_no_species
-
     Parameters
     ----------
     df_in : pd.DataFrame
@@ -360,12 +333,10 @@ def sub_category_extract_no_context_no_species(
         DESCRIPTION. The default is None.
     sub_category : str, optional
         DESCRIPTION. The default is None.
-
     Returns
     -------
     df_out : pd.DataFrame
         DESCRIPTION.
-
     """
     
     df_out = df_in.copy(deep=True)
@@ -527,7 +498,7 @@ species_etc_cols_out = \
       'secondary_investment_priority','documents_priority','assets',
       'natural_cultural_assets_managed','threatened_species', 
       'threatened_ecological_communities','migratory_species',
-      'ramsar_wetland,world_heritage_area',
+      'ramsar_wetland','world_heritage_area',
       'community_awareness_participation_in_nrm',
       'indigenous_cultural_values','indigenous_ecological_knowledge',
       'remnant_vegetation','aquatic_and_coastal_systems_including_wetlands',
@@ -555,6 +526,9 @@ meri_outcomes_indicator_ref = \
     "indigenous_ecological_knowledge","remnant_vegetation",
     "aquatic_and_coastal_systems_including_wetlands"]
 
+adjustment_cols = \
+  ['project_service','output_measure','reported_measure_requiring_adjustment',
+    'adjustment']
     
 # management_units = pd.read_csv('management_units.csv')
 # management_units.to_pickle("./management_units.pkl")  
@@ -871,6 +845,37 @@ report_raw = pd.concat([
     property = 'Removal',
     value = 'Total Plans')])
 
+adjustments_data = load_mult_wbooks('M09', 'RLP Output Report Adjustment')
+adjustments_data = adjustments_data[project_cols_in + report_cols_in + \
+                                    adjustment_cols]
+adjustments_data = adjustments_data.rename(columns={
+    'project_service':'service','output_measure':'target_measure'})
+adjustments_data['measured'] = np.nan
+adjustments_data['actual'] = \
+    adjustments_data['reported_measure_requiring_adjustment']
+adjustments_data['invoiced'] = adjustments_data['adjustment']
+adjustments_data['report_species'] = np.nan
+adjustments_data['category'] = np.nan
+adjustments_data['context'] = np.nan
+adjustments_data['sub_category'] = np.nan
+adjustments_data['meta_source_sheetname'] = 'RLP Output Report Adjustment' 
+adjustments_data['meta_transform_func'] = 'Adjustment Reports',
+adjustments_data['meta_col_measured'] = np.nan
+adjustments_data['meta_col_actual'] = 'reported_measure_requiring_adjustment',
+adjustments_data['meta_col_invoiced'] = 'adjustment',
+adjustments_data['meta_col_category'] = np.nan
+adjustments_data['meta_col_context'] = np.nan
+adjustments_data['meta_text_subcategory'] = np.nan
+adjustments_data['meta_col_report_species'] = np.nan
+adjustments_data['meta_line_item_object_class'] = np.nan
+adjustments_data[' meta_line_item_property'] = np.nan
+adjustments_data['meta_line_item_value'] = np.nan
+adjustments_data.drop(['reported_measure_requiring_adjustment','adjustment'],
+                      axis=1, inplace=True)
+adjustments_data = join_by_service_target_measure(adjustments_data,'service',
+                                                  'target_measure')
+report_raw = pd.concat([report_raw,adjustments_data])
+
 # Project Reports
 project_reports = report_raw.copy(deep=True)
 project_reports = project_reports.merge(management_units,
@@ -920,6 +925,9 @@ isin(['Primary outcome','Secondary Outcome/s'])]\
     [['merit_project_id','outcome']]
 primary_secondary_outcomes = conc_col(
     primary_secondary_outcomes,'merit_project_id','outcome')
+primary_secondary_outcomes.rename(columns={'outcome':
+                                           'primary_secondary_outcomes'},
+                          inplace=True)
 
 # Primary Outcomes
 primary_outcomes = RLP_Outcomes.copy(deep=True)
@@ -928,6 +936,8 @@ primary_outcomes['type_of_outcomes'] =='Primary outcome']\
     [['merit_project_id','outcome']]
 primary_outcomes = conc_col(
     primary_outcomes,'merit_project_id','outcome')
+primary_outcomes.rename(columns={'outcome':'primary_outcomes'},
+                          inplace=True)
 
 # Secondary Outcomes
 secondary_outcomes = RLP_Outcomes.copy(deep=True)
@@ -936,7 +946,8 @@ secondary_outcomes['type_of_outcomes'] =='Secondary Outcome/s']\
     [['merit_project_id','outcome']]
 secondary_outcomes = conc_col(
     secondary_outcomes,'merit_project_id','outcome')
-
+secondary_outcomes.rename(columns={'outcome':'secondary_outcomes'},
+                          inplace=True)
 
 # Primary and Secondary Investment Priorities 
 primary_secondary_investment_priorities = RLP_Outcomes.copy(deep=True)
@@ -948,6 +959,9 @@ isin(['Primary outcome','Secondary Outcome/s'])]\
 primary_secondary_investment_priorities = conc_col(
     primary_secondary_investment_priorities,'merit_project_id',
     'investment_priority')
+primary_secondary_investment_priorities.rename(columns=
+    {'investment_priority':'primary_secondary_investment_priorities'},
+    inplace=True)
 
 # Primary Investment Priorities
 primary_investment_priorities = RLP_Outcomes.copy(deep=True)
@@ -956,6 +970,9 @@ primary_investment_priorities['type_of_outcomes'] =='Primary outcome']\
     [['merit_project_id','investment_priority']]
 primary_investment_priorities = conc_col(
     primary_investment_priorities,'merit_project_id','investment_priority')
+primary_investment_priorities.rename(columns=
+    {'investment_priority':'primary_investment_priority'},
+    inplace=True)
 
 # Secondary Investment Priorities
 secondary_investment_priorities = RLP_Outcomes.copy(deep=True)
@@ -964,12 +981,15 @@ secondary_investment_priorities['type_of_outcomes'] =='Secondary Outcome/s']\
     [['merit_project_id','investment_priority']]
 secondary_investment_priorities = conc_col(
     secondary_investment_priorities,'merit_project_id','investment_priority')
+secondary_investment_priorities.rename(columns=
+    {'investment_priority':'secondary_investment_priority'},
+    inplace=True)
 
 # Project Assets
 project_assets = read_sheet('MERI_Project Assets','M01 '+extract_date+'.xlsx',
                             start_row=0)[['merit_project_id','asset']]
 project_assets = conc_col(project_assets, 'merit_project_id','asset')
-
+project_assets.rename(columns={'asset':'assets'}, inplace=True)
 
 # Meri Outcomes Indicators
 meri_outcomes = read_sheet('MERI_Outcomes','M01 '+extract_date+'.xlsx',
@@ -996,17 +1016,22 @@ meri_priorities = conc_col(meri_priorities,
                            'merit_project_id',
                            'documents_priority')
 
-report_species = report_raw.copy(deep = True)                                   
-report_species = report_species[~report_species['species'].isnull()]
-report_species = report_species[['merit_project_id','species']]
-report_species = conc_col(report_species,'merit_project_id','species')
+reports_species = report_raw.copy(deep = True)                                   
+reports_species = reports_species[~reports_species['species'].isnull()]
+reports_species = reports_species[['merit_project_id','species']]
+reports_species = conc_col(reports_species,'merit_project_id','species')
+reports_species = reports_species.rename(columns={'species':'report_species'})
 
-report_project_services = report_raw.copy(deep=True)
-report_project_services = report_project_services[['merit_project_id','service','target_measure']]
-report_project_services['report_project_services'] = report_project_services['service'] + \
-    ' - ' + report_project_services['target_measure']
-report_project_services = report_project_services[['merit_project_id','report_project_services']]
-report_project_services = conc_col(report_project_services,'merit_project_id','report_project_services')
+reports_project_services = report_raw.copy(deep=True)
+reports_project_services = reports_project_services[['merit_project_id',
+                                                   'service','target_measure']]
+reports_project_services['report_project_services'] = reports_project_services[
+    'service'] +' - ' + reports_project_services['target_measure']
+reports_project_services = reports_project_services[['merit_project_id',
+                                                     'report_project_services']]
+reports_project_services = conc_col(reports_project_services,
+                                     'merit_project_id',
+                                     'report_project_services')
 
 # # load("sprat_lookup.Rdata")
 # # col_by_merit_project_id <- function(Data,col) {
@@ -1030,75 +1055,75 @@ report_project_services = conc_col(report_project_services,'merit_project_id','r
 # #   filter(!is.na(sprat_category)) %>%
 # #   distinct()
 
+projects_reports_species = project_reports.copy(deep=True)
+projects_reports_species = projects_reports_species.merge(
+    primary_secondary_investment_priorities,on='merit_project_id', how='left').\
+    merge(primary_investment_priorities,on='merit_project_id', how='left').\
+    merge(secondary_investment_priorities,on='merit_project_id', how='left').\
+    merge(project_assets,on='merit_project_id', how='left').\
+    merge(meri_outcomes,on='merit_project_id', how='left').\
+    merge(epbc,on='merit_project_id',how='left').\
+    merge(tec,on='merit_project_id',how='left').\
+    merge(ramsar,on='merit_project_id',how='left').\
+    merge(primary_secondary_outcomes,on='merit_project_id',how='left').\
+    merge(primary_outcomes,on='merit_project_id',how='left').\
+    merge(secondary_outcomes,on='merit_project_id',how='left').\
+    merge(meri_priorities,on='merit_project_id',how='left')
+projects_reports_species['meta_col_project_status'] = 'status'
+projects_reports_species['meta_col_project_start_date'] = 'start_date'
+projects_reports_species['meta_col_project_end_date'] = 'end_date'
+projects_reports_species['meta_col_project_contracted_start_date'] = \
+    'contracted_start_date'
+projects_reports_species['meta_col_project_contracted_end_date'] = \
+                                          'contracted_end_date'
+projects_reports_species['meta_col_project_name'] = 'name'
+projects_reports_species = projects_reports_species[
+    project_cols_out + report_cols_out + \
+    project_meta_cols_out + report_meta_cols_out + \
+    species_etc_cols_out + extract_date_cols]
 
 
-# projects_reports_species <- projects_reports %>% 
-#   mutate(version=version) %>%
-#   left_join(primary_secondary_investment_priorities,by='merit_project_id') %>%
-#   left_join(primary_investment_priority,by='merit_project_id') %>%
-#   left_join(secondary_investment_priority,by='merit_project_id') %>%
-#   left_join(project_assets,by='merit_project_id') %>%
-#   left_join(meri_outcomes_indicators,by='merit_project_id') %>%
-#   left_join(EPBC,by='merit_project_id') %>%
-#   left_join(TEC,by='merit_project_id') %>%
-#   left_join(RAMSAR,by='merit_project_id') %>%
-#   left_join(primary_secondary_outcomes,by='merit_project_id') %>%
-#   left_join(primary_outcomes,by='merit_project_id') %>%
-#   left_join(secondary_outcomes,by='merit_project_id') %>%
-#   left_join(management_units,by='management_unit') %>%
-#   left_join(meri_priorities,by='merit_project_id') %>%
-#   mutate(across(any_of(species_etc_cols_out),function(x) {ifelse(x=='NA',
-#                                                                  NA,x)}),
-#          meta_col_project_status='status',
-#          meta_col_project_start_date='start_date',
-#          meta_col_project_end_date='end_date',
-#          meta_col_project_contracted_start_date='contracted_start_date',
-#          meta_col_project_contracted_end_date='contracted_end_date',
-#          meta_col_project_name='name') %>%
-#   select(any_of(project_cols_out),any_of(report_cols_out),
-#          any_of(project_meta_cols_out),any_of(report_meta_cols_out),
-#          any_of(species_etc_cols_out),any_of(extract_date_cols)) %>%
-#   select(-description)
+projects_species = projects.copy(deep=True)
+projects_species = projects_species.merge(
+    primary_secondary_investment_priorities,on='merit_project_id', how='left').\
+    merge(primary_investment_priorities,on='merit_project_id', how='left').\
+    merge(secondary_investment_priorities,on='merit_project_id', how='left').\
+    merge(project_assets,on='merit_project_id', how='left').\
+    merge(meri_outcomes,on='merit_project_id', how='left').\
+    merge(epbc,on='merit_project_id',how='left').\
+    merge(tec,on='merit_project_id',how='left').\
+    merge(ramsar,on='merit_project_id',how='left').\
+    merge(primary_secondary_outcomes,on='merit_project_id',how='left').\
+    merge(primary_outcomes,on='merit_project_id',how='left').\
+    merge(secondary_outcomes,on='merit_project_id',how='left').\
+    merge(meri_priorities,on='merit_project_id',how='left').\
+    merge(management_units,on='management_unit',how='left').\
+    merge(reports_project_services,on='merit_project_id',how='left').\
+    merge(reports_species,on='merit_project_id',how='left')
+projects_species['meta_col_project_status'] = 'status'
+projects_species['extract_date'] = extract_date
+projects_species['version'] = version
+projects_species['grant_or_procurement'] = np.nan
+projects_species['meta_col_project_start_date'] = 'start_date'
+projects_species['meta_col_project_end_date'] = 'end_date'
+projects_species['meta_col_project_contracted_start_date'] = \
+    'contracted_start_date'
+projects_species['meta_col_project_contracted_end_date'] = \
+                                          'contracted_end_date'
+projects_species['meta_col_project_name'] = 'name'
 
-# projects_species <- Projects %>%
-#   mutate(version=version) %>%
-#   left_join(primary_secondary_investment_priorities,by='merit_project_id') %>%
-#   left_join(primary_investment_priority,by='merit_project_id') %>%
-#   left_join(secondary_investment_priority,by='merit_project_id') %>%
-#   left_join(project_assets,by='merit_project_id') %>%
-#   mutate(across(any_of(species_etc_cols_out),as.character)) %>%
-#   left_join(meri_outcomes_indicators,by='merit_project_id') %>%
-#   left_join(EPBC,by='merit_project_id') %>%
-#   left_join(TEC,by='merit_project_id') %>%
-#   left_join(RAMSAR,by='merit_project_id') %>%
-#   left_join(primary_secondary_outcomes,by='merit_project_id') %>%
-#   left_join(primary_outcomes,by='merit_project_id') %>%
-#   left_join(secondary_outcomes,by='merit_project_id') %>%
-#   left_join(report_species,by='merit_project_id') %>%
-#   left_join(report_project_services,by='merit_project_id') %>%
-#   left_join(management_units,by='management_unit')%>%
-#   left_join(meri_priorities,by='merit_project_id') %>%
-#   mutate(extract_date=extract_date) %>%
-#   rename(project_status=status,project_start_date=start_date,
-#          project_end_date=end_date,
-#          project_contracted_start_date=contracted_start_date,
-#          project_contracted_end_date=contracted_end_date,
-#          project_name=name) %>%
-#   select(any_of(project_cols_out),service_provider,report_project_services,
-#          any_of(species_etc_cols_out),any_of(extract_date_cols))
+projects_species.rename(columns={
+    'status':'project_status',
+    'start_date':'project_start_date',
+    'end_date':'project_end_date',
+    'contracted_start_date':'project_contracted_start_date',
+    'contracted_end_date':'project_contracted_end_date',
+    'name':'project_name'},inplace=True)
 
-# target_cols <- c("merit_project_id","management_unit","program","sub_program",
-#                  "total_to_be_delivered","x2018_2019","x2019_2020","x2020_2021","x2021_2022",
-#                  "x2022_2023")
+project_species = projects_species[project_cols_out + ['service_provider', \
+                                   'report_project_services'] + \
+                                   species_etc_cols_out +\
+                                       extract_date_cols]    
+    
 
-# # One for the road
-# projects_services_targets_outcomes <- 
-#   read.xlsx('M01 2022-08-15.xlsx',sheet='Project services and targets') %>% 
-#   clean_names() %>% 
-#   rename(merit_project_id=grant_id) %>%
-#   select(any_of(target_cols)) %>%
-#   mutate(across(any_of(c("total_to_be_delivered","x2018_2019","x2019_2020","x2020_2021","x2021_2022",
-#                          "x2022_2023")),as.numeric)) %>%
-#   rename_with( ~ gsub("x", "", .x, fixed = TRUE)) %>%
-#   left_join(primary_secondary_outcomes,by="merit_project_id") %>%
-#   left_join(management_units,by="management_unit")
+
