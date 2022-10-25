@@ -8,6 +8,7 @@ import pandas as pd
 from janitor import clean_names
 import itertools
 import numpy as np
+import re
 
 def read_sheet(sheet_name:str,fname:str,start_row:int = 2) -> pd.DataFrame:
     """
@@ -104,6 +105,13 @@ def ids_by_df(ids_in:pd.DataFrame, df_in:pd.DataFrame, fy:str) -> pd.DataFrame:
                            'fy_target':fy_target_missing})
     return df_out
 
+def split_col_to_rows(df_in:pd.Dataframe,
+              column:str,
+              regex:str) -> pd.DataFrame:
+    df_in = df_in.copy(deep=True)
+    df_out[column] = \
+    re.split(regex,df_out[column])
+    return df_out.explode(column)
 
 def conc_col(df_in:pd.DataFrame,
              group_cols:list,
